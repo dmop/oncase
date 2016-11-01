@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html ng-app="Oncase">
+    <head>
+
+        <meta name="description" content="Projeto de  DashBoard em AngularJs com dados do Inpeachment da presidente Dilma">
+        <meta name="author" content="Danilo Pedrosa">
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no"/>
+        <link rel="stylesheet" type="text/css" href="css/app.css"/>
+        <link rel="stylesheet" href="/node_modules/angular-material/angular-material.css">
+        <title>Painel do Impeachment</title>
+        <link rel="icon" href="http://oncase.com.br/assets/img/oncase-logo-squared-primary.png" type="image/png">
+        <script src="/node_modules/angular/angular.js"></script>
+        <script src="/node_modules/angular-aria/angular-aria.js"></script>
+        <script src="/node_modules/angular-animate/angular-animate.js"></script>
+        <script src="/node_modules/angular-material/angular-material.js"></script>
+        <script src="node_modules/angular-filter/dist/angular-filter.min.js"></script>
+        <script src="node_modules/chart.js/dist/Chart.min.js"></script>
+        <script src="node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+        <script src="/js/app.js"></script>
+        <script src="/js/controllers/AppCtrl.js"></script>
+        <script src="/js/controllers/dadosController.js"></script>
+        <script src="/view/page1.html"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+
+    </head>
+
+    <body ng-controller="dadosController">
+
+        <div class="header">
+            <md-toolbar class="md-theme-light">
+                <div class="md-toolbar-tools">
+
+                    <md-button class="md-icon-button" aria-label="User">
+                        <img src="img/dilma.jpeg" style="width:24px;height:24px;"/>
+                    </md-button>
+
+                    <h2>
+                        <span>Dilma Rousseff</span>
+                    </h2>
+
+                    <md-input-container md-no-float class="md-accent" flex="50" style="padding-top:15px;margin-left:90px">
+                        <md-icon style="color:wheat;padding-top:12px" class="material-icons">&#xE8B6;</md-icon>
+                        <input ng-model="criterioDeBusca" placeholder="Digite o nome do Parlamentar" style="padding-left:25px;margin-left:5px">
+                    </md-input-container>
+
+                    <span flex></span>
+
+                    <md-button ng-controller="AppCtrl" class="md-primary md-raised" ng-click="showAdvanced($event)">
+                        Ajuda
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+        </div>
+
+        <div >
+
+            <div ng-cloak>
+                <md-content>
+                    <md-tabs md-dynamic-height md-border-bottom>
+                        <md-tab label="Dashboard">
+                            <md-content class="md-padding">
+
+                                <div layout="row">
+
+                                    <div flex>
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color: #0288D1">
+                                            <md-card-title>
+                                                <md-card-title-text>
+                                                    <span class="md-headline" style="color:white">
+                                                        <strong>
+                                                            {{(getCountSexo("MASCULINO")*100)/getCountSexo("")| number:2}}%
+                                                        </strong>
+                                                    </span>
+                                                    <span class="md-subhead" style="color:white">
+                                                        Masculino
+                                                    </span>
+                                                </md-card-title-text>
+                                                <md-card-title-media>
+                                                    <div class="md-media-sm card-media">
+                                                        <img class="md-card-avatar" src="img\Logomakr_91B6Y2.png">
+                                                    </div>
+                                                    <span class="md-subhead" style="color:white;padding-left:20px">
+                                                        Sexo
+                                                    </span>
+                                                </md-card-title-media>
+                                            </md-card-title>
+
+                                        </md-card>
+
+                                    </div>
+
+                                    <div flex>
+
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color:#FF5722">
+                                            <md-card-title>
+                                                <md-card-title-text>
+                                                    <span class="md-headline" style="color:white">
+
+                                                        <strong>
+                                                            {{(getCountEnsino("SUPERIOR COMPLETO")*100)/getCountEnsino("")| number:2}}%
+                                                        </strong>
+                                                    </span>
+                                                    <span class="md-subhead" style="color:white">
+                                                        Ensino Superior
+                                                    </span>
+                                                </md-card-title-text>
+                                                <md-card-title-media>
+                                                    <div class="md-media-sm card-media" style="padding-left:50px">
+                                                        <img class="md-card-avatar" src="img\Logomakr_9rLo6E.png">
+                                                    </div>
+                                                    <span class="md-subhead" style="color:white;padding-left:20px">
+                                                        Grau de Instrução
+                                                    </span>
+                                                </md-card-title-media>
+                                            </md-card-title>
+
+                                        </md-card>
+
+                                    </div>
+
+                                    <div flex>
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color:#FFA000">
+                                            <md-card-title>
+                                                <md-card-title-text>
+                                                    <span class="md-headline" style="color:white">
+                                                        <strong>
+
+                                                            {{(getCountEstadoCivil("CASADO(A)")*100)/getCountEstadoCivil("")| number:2}}%
+                                                        </strong>
+                                                    </span>
+                                                    <span class="md-subhead" style="color:white">
+                                                        Casado(a)
+                                                    </span>
+                                                </md-card-title-text>
+                                                <md-card-title-media>
+                                                    <div class="md-media-sm card-media">
+                                                        <img class="md-card-avatar" src="img\Logomakr_88Nz3Y.png">
+
+                                                    </div>
+                                                    <span class="md-subhead" style="color:white">
+                                                        Estado Civil
+                                                    </span>
+                                                </md-card-title-media>
+                                            </md-card-title>
+
+                                        </md-card>
+
+                                    </div>
+
+                                    <div flex>
+
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color:#5D4037">
+                                            <md-card-title>
+                                                <md-card-title-text>
+                                                    <span class="md-headline" style="color:white">
+                                                        <strong>
+                                                            {{(getCountFaixa("De 46 a 65")*100)/getCountFaixa("")| number:2}}%
+                                                        </strong>
+                                                    </span>
+                                                    <span class="md-subhead" style="color:white">
+                                                        Entre 46 e 65 Anos
+                                                    </span>
+                                                </md-card-title-text>
+                                                <md-card-title-media>
+                                                    <div class="md-media-sm card-media" style="padding-left:25px">
+                                                        <img class="md-card-avatar" src="img\Logomakr_7VHIYG.png">
+                                                    </div>
+                                                    <span class="md-subhead" style="color:white;padding-left:20px">
+                                                        Faixa Etária
+                                                    </span>
+                                                </md-card-title-media>
+                                            </md-card-title>
+
+                                        </md-card>
+
+                                    </div>
+
+                                </div>
+
+                                <div layout="row">
+
+                                    <div flex>
+
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color: white">
+                                            <md-toolbar class="md-warn" style="background-color:#673AB7">
+                                                <div class="md-toolbar-tools">
+                                                    <strong>
+                                                        <h2 class="md-flex">Placar do Impeachment</h2>
+                                                    </strong>
+                                                </div>
+                                            </md-toolbar>
+                                            <canvas
+                                                id="doughnut"
+                                                class="chart chart-doughnut"
+                                                chart-colors="[ '#388E3C', '#D32F2F', '#607D8B', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']"
+                                                chart-data="[getCountVoto('SIM'),getCountVoto('NÃO'),getCountVoto('ABSTENÇÃO'),getCountVoto('AUSENTE')]"
+                                                chart-labels="['Sim','Não','Abstenção','Ausente']"></canvas>
+
+                                        </md-card>
+                                    </div>
+
+                                    <div flex>
+
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color: white">
+                                            <md-toolbar class="md-warn" style="background-color:#00796B">
+                                                <div class="md-toolbar-tools">
+                                                    <strong>
+                                                        <h2 class="md-flex">Parlamentares por Partido</h2>
+                                                    </strong>
+                                                </div>
+                                            </md-toolbar>
+
+                                            <canvas
+                                                id="pie"
+                                                class="chart chart-pie"
+                                                chart-colors="['#FFC107', '#d50000', '#1A237E', '#80DEEA', '#01579B', '#795548', '#FFA726', '#6200EA', '#2196F3', '#f44336', '#263238', '#BCAAA4', '#FF8A65', '#ff1744', '#4CAF50', '#D500F9', '#ff8a80']"
+                                                chart-data="[getCountPartido('PARTIDO DO MOVIMENTO DEMOCRÁTICO BRASILEIRO'),getCountPartido('PARTIDO DOS TRABALHADORES'),getCountPartido('PARTIDO DA SOCIAL DEMOCRACIA BRASILEIRA'),
+
+                                            getCountPartido('PARTIDO PROGRESSISTA'),getCountPartido('PARTIDO DA REPÚBLICA'),
+
+                                            getCountPartido('PARTIDO SOCIAL DEMOCRÁTICO'),getCountPartido('PARTIDO SOCIALISTA BRASILEIRO'),getCountPartido('DEMOCRATAS'),getCountPartido('PARTIDO REPUBLICANO BRASILEIRO'),getCountPartido('PARTIDO DEMOCRÁTICO TRABALHISTA'),getCountPartido('PARTIDO TRABALHISTA BRASILEIRO'),
+
+                                            getCountPartido('SOLIDARIEDADE'),getCountPartido('PARTIDO TRABALHISTA NACIONAL'),getCountPartido('PARTIDO COMUNISTA DO BRASIL'),getCountPartido('PARTIDO SOCIAL CRISTÃO'),getCountPartido('PARTIDO POPULAR SOCIALISTA'),getCountPartido('PARTIDO HUMANISTA DA SOLIDARIEDADE')]"
+                                                chart-labels="['PMDB','PT','PSDB','PP','PR','PSD','PSB','DEM','PRB','PDT','PTB','SD','PTN','PC do B','PSC','PPS','PHS']"
+                                                chart-options="options"></canvas>
+
+                                        </md-card>
+                                    </div>
+
+                                </div>
+                                <div layout="row">
+
+                                    <div flex>
+
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color: white">
+                                            <md-toolbar class="md-warn" style="background-color:#1A237E">
+                                                <div class="md-toolbar-tools">
+                                                    <strong>
+                                                        <h2 class="md-flex">Votos Por Partido</h2>
+                                                    </strong>
+                                                </div>
+                                            </md-toolbar>
+                                            <canvas
+                                                id="base"
+                                                class="chart-horizontal-bar"
+                                                chart-colors="['#1A237E','#d50000']"
+                                                chart-data="[ [getCountVotoPartido('SIM','PARTIDO DO MOVIMENTO DEMOCRÁTICO BRASILEIRO'),getCountVotoPartido('SIM','PARTIDO DOS TRABALHADORES'),getCountVotoPartido('SIM','PARTIDO DA SOCIAL DEMOCRACIA BRASILEIRA'),
+                                                      getCountVotoPartido('SIM','PARTIDO PROGRESSISTA'),getCountVotoPartido('SIM','PARTIDO DA REPÚBLICA'),getCountVotoPartido('SIM','PARTIDO SOCIAL DEMOCRÁTICO'),getCountVotoPartido('SIM','PARTIDO SOCIALISTA BRASILEIRO'),getCountVotoPartido('SIM','DEMOCRATAS'),getCountVotoPartido('SIM','PARTIDO REPUBLICANO BRASILEIRO'),getCountVotoPartido('SIM','PARTIDO DEMOCRÁTICO TRABALHISTA'),getCountVotoPartido('SIM','PARTIDO TRABALHISTA BRASILEIRO'),
+                                                      getCountVotoPartido('SIM','SOLIDARIEDADE'),getCountVotoPartido('SIM','PARTIDO TRABALHISTA NACIONAL'),getCountVotoPartido('SIM','PARTIDO COMUNISTA DO BRASIL'),getCountVotoPartido('SIM','PARTIDO SOCIAL CRISTÃO'),getCountVotoPartido('SIM','PARTIDO POPULAR SOCIALISTA'),getCountVotoPartido('SIM','PARTIDO HUMANISTA DA SOLIDARIEDADE')] ,
+                                                      [getCountVotoPartido('NÃO','PARTIDO DO MOVIMENTO DEMOCRÁTICO BRASILEIRO'),getCountVotoPartido('NÃO','PARTIDO DOS TRABALHADORES'),getCountVotoPartido('NÃO','PARTIDO DA SOCIAL DEMOCRACIA BRASILEIRA'),
+getCountVotoPartido('NÃO','PARTIDO PROGRESSISTA'),getCountVotoPartido('NÃO','PARTIDO DA REPÚBLICA'),getCountVotoPartido('NÃO','PARTIDO SOCIAL DEMOCRÁTICO'),getCountVotoPartido('NÃO','PARTIDO SOCIALISTA BRASILEIRO'),getCountVotoPartido('NÃO','DEMOCRATAS'),getCountVotoPartido('NÃO','PARTIDO REPUBLICANO BRASILEIRO'),getCountVotoPartido('NÃO','PARTIDO DEMOCRÁTICO TRABALHISTA'),getCountVotoPartido('NÃO','PARTIDO TRABALHISTA BRASILEIRO'),
+getCountVotoPartido('NÃO','SOLIDARIEDADE'),getCountVotoPartido('NÃO','PARTIDO TRABALHISTA NACIONAL'),getCountVotoPartido('NÃO','PARTIDO COMUNISTA DO BRASIL'),getCountVotoPartido('NÃO','PARTIDO SOCIAL CRISTÃO'),getCountVotoPartido('NÃO','PARTIDO POPULAR SOCIALISTA'),getCountVotoPartido('NÃO','PARTIDO HUMANISTA DA SOLIDARIEDADE')] ]"
+                                                chart-labels="['PMDB','PT','PSDB','PP','PR','PSD','PSB','DEM','PRB','PDT','PTB','SD','PTN','PC do B','PSC','PPS','PHS']"
+                                                chart-series="['Sim','Não']"></canvas>
+
+                                        </md-card>
+                                    </div>
+
+                                    <div flex>
+
+                                        <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color: white">
+                                            <md-toolbar class="md-warn" style="background-color:#607D8B">
+                                                <div class="md-toolbar-tools">
+                                                    <strong>
+                                                        <h2 class="md-flex">Votos Por Região</h2>
+                                                    </strong>
+                                                </div>
+                                            </md-toolbar>
+                                            <canvas
+                                                id="base1"
+                                                class="chart-horizontal-bar"
+                                                chart-colors="['#1A237E','#d50000']"
+                                                chart-data="[[getCountVotoRegiao('SIM','Norte'),getCountVotoRegiao('SIM','Centro-Oeste'),
+                                            getCountVotoRegiao('SIM','Nordeste'),getCountVotoRegiao('SIM','Sudeste'),getCountVotoRegiao('SIM','Sul')],
+                                            [getCountVotoRegiao('NÃO','Norte'),getCountVotoRegiao('NÃO','Centro-Oeste'),getCountVotoRegiao('NÃO','Nordeste'),getCountVotoRegiao('NÃO','Sudeste'),getCountVotoRegiao('NÃO','Sul')]]"
+                                                chart-labels="['Norte','Centro-Oeste','Nordeste','Sudeste','Sul']"
+                                                chart-series="['Sim','Não']"></canvas>
+
+                                        </md-card>
+                                    </div>
+
+                                </div>
+                            </md-content>
+
+                        </md-tab>
+
+                        <md-tab label="Parlamentares">
+                            <md-content class="md-padding">
+
+                                <md-card ng-repeat="x in parlamentares | filter:{PARLAMENTAR :criterioDeBusca}">
+
+                                    <md-card-header>
+                                        <md-card-avatar>
+                                            <img class="md-card-avatar" src="{{x.FOTO}}">
+                                        </md-card-avatar>
+                                        <md-card-header-text>
+                                            <span class="md-title">{{x.PARLAMENTAR}}</span>
+                                            <span class="md-subhead">{{x.PARTIDO}}</span>
+                                            <span class="md-subhead">Idade :
+                                                {{x.IDADE_ATUAL}}</span>
+                                        </md-card-header-text>
+                                    </md-card-header>
+                                    <md-card-title>
+                                        <md-card-title-text>
+                                            <span class="md-headline">{{x.VOTO}}</span>
+                                            <span class="md-subhead">Região
+                                                {{x.REGIAO}}
+                                                /
+                                                {{x.UF}}
+                                            </span>
+                                            <span class="md-subhead">{{x.COMPOSICAO_LEGENDA}}</span>
+                                        </md-card-title-text>
+                                    </md-card-title>
+                                </md-card>
+
+                            </md-content>
+                        </md-tab>
+                    </md-tabs>
+                </md-content>
+            </div>
+
+        </div>
+
+    </body>
+
+</html>

@@ -1,0 +1,44 @@
+-Chart 3 deve ser feito
+-Assistir videos e ver mais funcionalidades
+
+
+	SIM[65, 59, 80, 81, 56, 55, 40],
+    NÃO[28, 48, 40, 19, 86, 27, 90],
+	ABSTENÇÃO[]
+
+chart-data="[getCountSigla('PMDB'),getCountSigla('PT'),getCountSigla('PSDB'),getCountSigla('PP'),getCountSigla('PR'),
+getCountSigla('PSD'),getCountSigla('PSB'),getCountSigla('DEM'),getCountSigla('PRB'),getCountSigla('PDT'),getCountSigla('PTB'),
+getCountSigla('SD'),getCountSigla('PTN'),getCountSigla('PC do B'),getCountSigla('PSC'),getCountSigla('PPS'),getCountSigla('PHS')]"
+
+chart-data="[[getCountVotoPartido('SIM','PARTIDO DO MOVIMENTO DEMOCRÁTICO BRASILEIRO')],[getCountVotoPartido('NÃO','PARTIDO DO MOVIMENTO DEMOCRÁTICO BRASILEIRO')],[getCountVotoPartido('ABSTENÇÃO','PARTIDO DO MOVIMENTO DEMOCRÁTICO BRASILEIRO')]]"
+
+
+                                    <div ng-repeat="(x, value) in parlamentares | where:{ VOTO: 'SIM'}| countBy: 'SIGLA_PARTIDO'">
+                                        PARTIDO
+                                        {{ x.SIGLA_PARTIDO }}, length:
+                                        {{ value }}
+                                    </div>
+
+	
+	                              <div ng-repeat="(voto, qtd) in parlamentares | countBy: 'VOTO'">
+                                  {{ voto }}
+                                  {{qtd}}
+                              </div>
+	
+	
+	                                <md-card md-theme="{{ showDarkTheme ? 'dark-purple' : 'default' }}" md-theme-watch style="background-color: white;heigth:600px;width:730px">
+                                    <md-toolbar class="md-warn" style="background-color:#673AB7">
+                                        <div class="md-toolbar-tools">
+                                            <strong>
+                                                <h2 class="md-flex">Placar do Impeachment</h2>
+                                            </strong>
+                                        </div>
+                                    </md-toolbar>
+                                    <canvas
+                                        id="doughnut"
+                                        class="chart chart-doughnut"
+                                        chart-colors="[ '#388E3C', '#D32F2F', '#607D8B', '#46BFBD', '#FDB45C', '#949FB1', '#4D5360']"
+                                        chart-data="[getCountVoto('SIM'),getCountVoto('NÃO'),getCountVoto('ABSTENÇÃO'),getCountVoto('AUSENTE')]"
+                                        chart-labels="['Sim','Não','Abstenção','Ausente']"></canvas>
+
+                                </md-card>

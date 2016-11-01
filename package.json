@@ -1,0 +1,21 @@
+{
+  "name": "oncase",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angular-animate": "^1.5.8",
+    "angular-aria": "^1.5.8",
+    "angular-chart.js": "^1.0.3",
+    "angular-chartist.js": "^4.2.1",
+    "angular-material": "^1.1.1",
+    "chartist": "^0.10.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
